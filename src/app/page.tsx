@@ -6,6 +6,7 @@ import Link from '@mui/material/Link';
 import NextLink from 'next/link';
 import ProTip from '@/components/ProTip';
 import Copyright from '@/components/Copyright';
+import {PageNames} from "@/app/page_names";
 
 export default function Home() {
   return (
@@ -22,7 +23,7 @@ export default function Home() {
         <Typography variant="h4" component="h1" sx={{ mb: 2 }}>
           Material UI - Next.js App Router example in TypeScript
         </Typography>
-        <Link href="/about" color="secondary" component={NextLink}>
+        <Link href={PageNames.about} color="secondary" component={NextLink}>
           Go to the about page
         </Link>
         <ProTip />

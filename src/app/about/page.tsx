@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import NextLink from 'next/link';
 import ProTip from '@/components/ProTip';
 import Copyright from '@/components/Copyright';
+import {PageNames} from "@/app/page_names";
 
 export default function About() {
   return (
@@ -23,7 +24,7 @@ export default function About() {
           Material UI - Next.js example in TypeScript
         </Typography>
         <Box sx={{ maxWidth: 'sm' }}>
-          <Button variant="contained" component={NextLink} href="/">
+          <Button variant="contained" component={NextLink} href={PageNames.home}>
             Go to the home page
           </Button>
         </Box>
