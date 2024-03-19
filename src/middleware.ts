@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import {PageNames} from "@/app/page_names";
+import {PageNames} from "@/contracts/PageNames";
 
 export function middleware(request: NextRequest) {
   if (request.nextUrl.pathname.startsWith(PageNames.about)) {

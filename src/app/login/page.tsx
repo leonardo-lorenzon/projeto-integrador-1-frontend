@@ -11,7 +11,7 @@ import Grid from '@mui/material/Grid';
 import { Login as LoginIcon } from '@mui/icons-material';
 import Typography from '@mui/material/Typography';
 import Copyright from "@/components/Copyright";
-import {PageNames} from "@/app/page_names";
+import {PageNames} from "@/contracts/PageNames";
 
 export default function Login() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
