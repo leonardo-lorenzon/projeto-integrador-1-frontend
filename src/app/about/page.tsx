@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import NextLink from 'next/link';
 import ProTip from '@/components/ProTip';
 import Copyright from '@/components/Copyright';
-import {PageNames} from "@/app/page_names";
+import {PageNames} from "@/contracts/PageNames";
 
 export default function About() {
   return (

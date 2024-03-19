@@ -12,19 +12,62 @@ import AppRegistration from '@mui/icons-material/AppRegistration';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Copyright from "@/components/Copyright";
-import {PageNames} from "@/app/page_names";
+import {PageNames} from "@/contracts/PageNames";
+import {UserRegister} from "@/contracts/UserRegister";
+import {useState} from "react";
+import {useRouter} from "next/navigation";
+import {registerUserApi} from "@/api/registerUserApi";
+import {Alert} from "@mui/material";
+import {NotificationError} from "@/contracts/errors/NotificationError";
+import {ApplicationErrorCodes} from "@/contracts/errors/ApplicationErrorCodes";
 
 export default function SignUp() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     const data = new FormData(event.currentTarget);
-    console.log({
-      name: data.get('name'),
-      surname: data.get('surname'),
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+
+    const userRegister = new UserRegister(
+      data.get('name') as string,
+      data.get('surname') as string,
+      data.get('email') as string,
+      data.get('password') as string
+    )
+
+    const notificationError = new NotificationError();
+
+    setLoading(true);
+    await registerUserApi(userRegister, notificationError)
+
+    if (notificationError.hasAnyError()) {
+      setLoading(false);
+
+      const error = notificationError.getFirstErrorCode();
+
+      switch (error) {
+        case ApplicationErrorCodes.userEmailExists:
+          setErrorMessage('Email já registrado.');
+          break;
+        case ApplicationErrorCodes.notMappedError:
+          setErrorMessage("Alguma coisa inesperada aconteceu.")
+          break;
+      }
+
+
+      return;
+    }
+
+    router.push(PageNames.login);
+    setLoading(false);
   };
+
+  const clearError = () => {
+    setErrorMessage('');
+  }
 
   return (
       <Container component="main" maxWidth="xs">
@@ -43,7 +86,7 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Cadastre-se
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" onSubmit={handleSubmit} onSelect={clearError} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -89,11 +132,18 @@ export default function SignUp() {
                 />
               </Grid>
             </Grid>
+            {
+              errorMessage &&
+              <Alert sx={ {mt: 2} } severity="error">
+                {errorMessage}
+              </Alert>
+            }
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              disabled={loading || errorMessage !== ''}
             >
               Cadastrar
             </Button>
