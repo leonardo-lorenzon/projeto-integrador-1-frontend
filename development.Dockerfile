@@ -1,12 +1,10 @@
 FROM node:20 as Build
 
+USER node
+
 WORKDIR /app
 
-COPY ./package.json ./
-COPY ./package-lock.json ./
+COPY --chown=node:node . /app
+RUN chmod -R 755 /app
 
-RUN npm install
-
-COPY . .
-
-CMD ["npm", "run", "dev"]
+CMD sh -c "npm install && npm run lint && npm run dev"
