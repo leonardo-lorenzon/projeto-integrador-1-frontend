@@ -6,7 +6,7 @@ import Link from '@mui/material/Link';
 import NextLink from 'next/link';
 import ProTip from '@/components/ProTip';
 import Copyright from '@/components/Copyright';
-import {PageNames} from "@/contracts/PageNames";
+import {PageNames} from "@/domain/contracts/PageNames";
 
 export default function Home() {
   return (

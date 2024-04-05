@@ -12,14 +12,14 @@ import AppRegistration from '@mui/icons-material/AppRegistration';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Copyright from "@/components/Copyright";
-import {PageNames} from "@/contracts/PageNames";
-import {UserRegister} from "@/contracts/UserRegister";
+import {PageNames} from "@/domain/contracts/PageNames";
+import {UserRegister} from "@/domain/contracts/UserRegister";
 import {useState} from "react";
 import {useRouter} from "next/navigation";
 import {registerUserApi} from "@/api/registerUserApi";
 import {Alert} from "@mui/material";
-import {NotificationError} from "@/contracts/errors/NotificationError";
-import {ApplicationErrorCodes} from "@/contracts/errors/ApplicationErrorCodes";
+import {NotificationError} from "@/domain/contracts/errors/NotificationError";
+import {ApplicationErrorCodes} from "@/domain/contracts/errors/ApplicationErrorCodes";
 
 export default function SignUp() {
   const router = useRouter();
@@ -41,7 +41,7 @@ export default function SignUp() {
     const notificationError = new NotificationError();
 
     setLoading(true);
-    await registerUserApi(userRegister, notificationError)
+    await registerUserApi(userRegister, notificationError, router);
 
     if (notificationError.hasAnyError()) {
       setLoading(false);
@@ -52,11 +52,15 @@ export default function SignUp() {
         case ApplicationErrorCodes.userEmailExists:
           setErrorMessage('Email já registrado.');
           break;
+        case ApplicationErrorCodes.failToCreateUserWithCredentials:
+          setErrorMessage('Falha ao tentar criar usuário.');
+          break;
         case ApplicationErrorCodes.notMappedError:
           setErrorMessage("Alguma coisa inesperada aconteceu.")
           break;
+        default:
+          setErrorMessage("Alguma coisa inesperada aconteceu.")
       }
-
 
       return;
     }

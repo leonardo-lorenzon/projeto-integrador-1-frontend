@@ -1,4 +1,4 @@
-import {ApplicationErrorCodes} from "@/contracts/errors/ApplicationErrorCodes";
+import {ApplicationErrorCodes} from "@/domain/contracts/errors/ApplicationErrorCodes";
 import {ApiErrorMapper} from "@/api/error/ApiErrorMapper";
 import isNil from "lodash/isNil";
 
