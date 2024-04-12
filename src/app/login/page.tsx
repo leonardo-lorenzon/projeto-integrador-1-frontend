@@ -11,17 +11,63 @@ import Grid from '@mui/material/Grid';
 import { Login as LoginIcon } from '@mui/icons-material';
 import Typography from '@mui/material/Typography';
 import Copyright from "@/components/Copyright";
-import {PageNames} from "@/contracts/PageNames";
+import {PageNames} from "@/domain/contracts/PageNames";
+import {NotificationError} from "@/domain/contracts/errors/NotificationError";
+import {useState} from "react";
+import {loginApi} from "@/api/loginApi";
+import {LoginCredential} from "@/domain/contracts/LoginCredential";
+import {useRouter} from "next/navigation";
+import {ApplicationErrorCodes} from "@/domain/contracts/errors/ApplicationErrorCodes";
+import {Alert} from "@mui/material";
+import {AuthenticationHandler} from "@/domain/login/AuthenticationHandler";
 
 export default function Login() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+
+    const notificationError = new NotificationError();
+
+    const credential = new LoginCredential(
+      data.get('email') as string,
+      data.get('password') as string
+    );
+
+    setLoading(true);
+    const token = await loginApi(credential, notificationError, router);
+
+    if (notificationError.hasAnyError()) {
+      setLoading(false);
+
+      const error = notificationError.getFirstErrorCode();
+
+      switch (error) {
+        case ApplicationErrorCodes.invalidCredential:
+          setErrorMessage("Email ou senha inválidos.");
+          break;
+        case ApplicationErrorCodes.failToCreateToken:
+          setErrorMessage("Falha ao tentar criar um token.");
+          break;
+        default:
+          setErrorMessage("Alguma coisa inesperada aconteceu.")
+      }
+
+      return;
+    }
+
+    new AuthenticationHandler().setToken(token);
+
+    router.push(PageNames.home);
+    setLoading(false);
   };
+
+  const clearError = () => {
+    setErrorMessage('');
+  }
 
   return (
       <Grid container component="main" sx={{ height: '100vh' }}>
@@ -55,7 +101,7 @@ export default function Login() {
             <Typography component="h1" variant="h5">
               Entrar
             </Typography>
-            <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <Box component="form" onSubmit={handleSubmit} onSelect={clearError} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
@@ -77,10 +123,17 @@ export default function Login() {
                 id="password"
                 autoComplete="current-password"
               />
+              {
+                errorMessage &&
+                <Alert sx={ {mt: 2} } severity="error">
+                  {errorMessage}
+                </Alert>
+              }
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
+                disabled={loading || errorMessage !== ''}
                 sx={{ mt: 3, mb: 2 }}
               >
                 Entrar

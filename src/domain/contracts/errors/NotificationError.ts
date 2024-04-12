@@ -1,4 +1,4 @@
-import {ApplicationErrorCodes} from "@/contracts/errors/ApplicationErrorCodes";
+import {ApplicationErrorCodes} from "@/domain/contracts/errors/ApplicationErrorCodes";
 
 export class NotificationError {
   private readonly _errorCodes: ApplicationErrorCodes[] = [];
