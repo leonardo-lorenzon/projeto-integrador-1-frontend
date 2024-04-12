@@ -2,8 +2,8 @@
 
 # Build application image
 build:
-	docker-compose build
+	docker compose build
 
 # Start application
 start:
-	docker-compose up
+	docker compose up
