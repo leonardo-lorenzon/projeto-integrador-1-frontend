@@ -1,34 +1,37 @@
 import * as React from 'react';
 import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
-import NextLink from 'next/link';
-import ProTip from '@/components/ProTip';
-import Copyright from '@/components/Copyright';
-import {PageNames} from "@/domain/contracts/PageNames";
+import Button from "@mui/material/Button";
+import MenuWrapper from "@/components/MenuWrapper";
 
 export default function Home() {
   return (
-    <Container maxWidth="lg">
-      <Box
-        sx={{
-          my: 4,
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <Typography variant="h4" component="h1" sx={{ mb: 2 }}>
-          Material UI - Next.js App Router example in TypeScript
-        </Typography>
-        <Link href={PageNames.about} color="secondary" component={NextLink}>
-          Go to the about page
-        </Link>
-        <ProTip />
-        <Copyright />
-      </Box>
-    </Container>
+    <MenuWrapper>
+      <Container maxWidth="lg">
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '90vh'
+          }}
+        >
+          <Button
+            variant="contained"
+            size="large"
+          >
+            Quero contratar um serviço
+          </Button>
+          <Button
+            variant="contained"
+            size="large"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Quero ofereçer um serviço
+          </Button>
+        </Box>
+      </Container>
+    </MenuWrapper>
   );
 }
