@@ -6,6 +6,7 @@ export class ApiErrorMapper {
     ['FAIL_CREATE_USER_WITH_CREDENTIAL', ApplicationErrorCodes.failToCreateUserWithCredentials],
     ['INVALID_CREDENTIAL', ApplicationErrorCodes.invalidCredential],
     ['FAIL_TO_CREATE_TOKEN', ApplicationErrorCodes.failToCreateToken],
+    ['FAIL_TO_ADD_SERVICE', ApplicationErrorCodes.failToAddService],
   ])
 
   public toApplicationErrorCode(apiErrorCode: string): ApplicationErrorCodes {

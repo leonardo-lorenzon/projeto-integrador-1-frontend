@@ -8,5 +8,8 @@ export enum ApplicationErrorCodes {
 
   // login
   invalidCredential = 'invalidCredential',
-  failToCreateToken = 'failToCreateToken'
+  failToCreateToken = 'failToCreateToken',
+
+  // add service
+  failToAddService = 'failToAddService'
 }
