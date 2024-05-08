@@ -25,12 +25,11 @@ export default function MenuHeader(props: { children: React.ReactNode }) {
                 edge="start"
                 color="inherit"
                 aria-label="menu"
-                sx={{ mr: 2 }}
               >
                 <MenuIcon />
               </IconButton>
               <EngineeringIcon fontSize="large" />
-              <Box />
+              <Box sx={{ pr: 4 }} />
             </Toolbar>
           </AppBar>
         </Box>
