@@ -21,6 +21,7 @@ export default function Home() {
           <Button
             variant="contained"
             size="large"
+            href={PageNames.searchService}
           >
             Quero contratar um serviço
           </Button>
