@@ -1,12 +1,11 @@
-import {UserRegister} from "@/domain/contracts/UserRegister";
 import {NotificationError} from "@/domain/contracts/errors/NotificationError";
 import {ApiErrorParser} from "@/api/error/ApiErrorParser";
 import {FetchWrapper} from "@/api/wrapper/FetchWrapper";
 import {AppRouterInstance} from "next/dist/shared/lib/app-router-context.shared-runtime";
-import {Service} from "@/domain/contracts/Service";
+import {ServiceAdd} from "@/domain/contracts/ServiceAdd";
 
 export async function addServiceApi(
-  service: Service,
+  service: ServiceAdd,
   notificationError: NotificationError,
   appRouter: AppRouterInstance
 ) {

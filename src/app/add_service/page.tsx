@@ -15,7 +15,7 @@ import {Alert} from "@mui/material";
 import MenuWrapper from "@/components/MenuWrapper";
 import {NotificationError} from "@/domain/contracts/errors/NotificationError";
 import {ApplicationErrorCodes} from "@/domain/contracts/errors/ApplicationErrorCodes";
-import {Service} from "@/domain/contracts/Service";
+import {ServiceAdd} from "@/domain/contracts/ServiceAdd";
 import Container from "@mui/material/Container";
 import {addServiceApi} from "@/api/addServiceApi";
 
@@ -29,7 +29,7 @@ export default function AddService() {
 
     const data = new FormData(event.currentTarget);
 
-    const service = new Service(
+    const service = new ServiceAdd(
       "135335d6-9ec0-41d7-b66e-26904d807f45", // TODO pass the correct accountId
       data.get('type') as string,
       data.get('description') as string,
@@ -103,6 +103,8 @@ export default function AddService() {
                 <TextField
                   required
                   fullWidth
+                  multiline
+                  rows={3}
                   id="description"
                   label="Descrição"
                   name="description"

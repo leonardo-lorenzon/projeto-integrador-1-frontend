@@ -1,5 +1,4 @@
-export class Service {
-  private readonly _id: string;
+export class ServiceAdd {
   private readonly _accountId: string;
   private readonly _type: string;
   private readonly _description: string;
@@ -8,7 +7,6 @@ export class Service {
   private readonly _country: string;
 
   constructor(
-    id: string,
     accountId: string,
     type: string,
     description: string,
@@ -16,17 +14,12 @@ export class Service {
     state: string,
     country: string
   ) {
-    this._id = id;
     this._accountId = accountId;
     this._type = type;
     this._description = description;
     this._city = city;
     this._state = state;
     this._country = country;
-  }
-
-  get id(): string {
-    return this._id;
   }
 
   get accountId(): string {
